@@ -85,6 +85,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>devopsproject-1.0</finalName>
     </build>
 
 </project>
