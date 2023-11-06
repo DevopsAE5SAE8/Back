@@ -62,6 +62,14 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>deploymentRepo</id>
+            <name>Nexus Repository</name>
+            <url>http://localhost:8081/repository/Devops/</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
