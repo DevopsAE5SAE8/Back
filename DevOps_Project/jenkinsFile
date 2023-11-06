@@ -23,11 +23,43 @@ pipeline{
             }
         }
 }
+stage('Unit Tests / Mockito') {
+        steps {
+            dir('DevOps_Project') {
+                sh 'mvn test'
+            }
+        }
+    }
+  stage('Generate JaCoCo Coverage Report') {
+        steps {
+            dir('DevOps_Project') {
+                sh 'mvn jacoco:report'
+            }
+        }
+    }
+
      stage('MVN SONARQUBE') {
             steps{
                  dir('DevOps_Project') {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ellouminati20'
             }}
+        }
+    }
+
+post {
+        always {
+            script {
+                def scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                withSonarQubeEnv('sonarqube') {
+                    sh "${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.login=admin \
+                        -Dsonar.password=ellouminati20 \
+                        -Dsonar.jacoco.reportPaths=Back/target/site/jacoco/jacoco.xml \
+                        -Dsonar.projectKey=DevOps_Project \
+                        -Dsonar.exclusions=vendor/**,resources/**,**/*.java \
+                        -Dsonar.host.url=http://192.168.1.147//:9000/"
+                }
+            }
         }
     }
 }
