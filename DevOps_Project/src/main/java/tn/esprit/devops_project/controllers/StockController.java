@@ -10,6 +10,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
+//zied
 public class StockController {
 
     IStockService stockService;
