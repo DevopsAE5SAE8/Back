@@ -54,7 +54,7 @@ post {
                     sh "${scannerHome}/bin/sonar-scanner \
                         -Dsonar.login=admin \
                         -Dsonar.password=ellouminati20 \
-                        -Dsonar.jacoco.reportPaths=Back/target/site/jacoco/jacoco.xml \
+                        -Dsonar.jacoco.reportPaths=DevOps_Project/target/site/jacoco/jacoco.xml \
                         -Dsonar.projectKey=DevOps_Project \
                         -Dsonar.exclusions=vendor/**,resources/**,**/*.java \
                         -Dsonar.host.url=http://192.168.1.147:9000/"
