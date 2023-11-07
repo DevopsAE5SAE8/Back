@@ -43,7 +43,7 @@ stage('Nexus') {
      stage('MVN SONARQUBE') {
             steps{
                  dir('DevOps_Project') {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ellouminati20'
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin'
             }}
         }
     }
