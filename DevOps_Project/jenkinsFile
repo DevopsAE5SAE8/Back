@@ -30,13 +30,7 @@ stage('Unit Tests / Mockito') {
             }
         }
     }
-  stage('Generate JaCoCo Coverage Report') {
-        steps {
-            dir('DevOps_Project') {
-                sh 'mvn jacoco:report'
-            }
-        }
-    }
+  
 
      stage('MVN SONARQUBE') {
             steps{
