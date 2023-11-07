@@ -18,7 +18,6 @@ import java.util.List;
 import tn.esprit.devops_project.repositories.StockRepository;
 
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class StockServiceImplTest {
 
