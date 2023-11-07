@@ -25,4 +25,11 @@ public class Product implements Serializable {
     @ManyToOne
     @JsonIgnore
     Stock stock;
+
+    public Product(Long idProduct, String title) {
+        this.idProduct = idProduct;
+        this.title = title;
+        this.price = price;
+        this.quantity = quantity;
+    }
 }
