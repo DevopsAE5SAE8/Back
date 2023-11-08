@@ -1,5 +1,10 @@
 pipeline{
     agent any
+
+    environment{
+    DOCKERHUB_CREDENTIALS=credentials('7e3ff159-8917-4d14-af8d-0da50f3e9c05')
+    }
+
     stages {
         stage("Testing Maven"){
             steps {
