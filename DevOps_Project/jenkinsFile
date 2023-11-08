@@ -38,7 +38,7 @@ pipeline {
                 }
         }
   
-stage('Test, Jacoco Report & Static Analysis') {
+    stage('Test, Jacoco Report & Static Analysis') {
                     steps {
                         dir('DevOps_Project') {
                         sh 'mvn test jacoco:report'
