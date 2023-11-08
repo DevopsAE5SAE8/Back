@@ -1,4 +1,4 @@
 FROM openjdk:8-jdk-alpine
 EXPOSE 8082
-ADD target/devopsproject-1.0.jar devopsproject-1.0.jar
-ENTRYPOINT ["java","-jar","/devopsproject-1.0.jar"]
+ADD target/elloumidevops-1.0.jar elloumidevops-1.0.jar
+ENTRYPOINT ["java","-jar","/elloumidevops-1.0.jar"]
