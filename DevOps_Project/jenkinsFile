@@ -52,6 +52,14 @@ stage('Nexus') {
             }}
         }
     }
+  stage('Build Docker') {
+            steps{
+                 dir('DevOps_Project') {
+                sh 'docker build -t abdellazizell/DevOps_Project'
+            }}
+        }
+    }
+
 
 post {
         always {
