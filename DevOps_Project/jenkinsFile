@@ -72,7 +72,7 @@ pipeline {
                 }
             }
         }
-        stage('Build & Push Docker Image') {
+        stage('Docker HUB  PUSH and Build') {
             steps {
                 script {
                     def dockerUsername = 'abdellazizell'
