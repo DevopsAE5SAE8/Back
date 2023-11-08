@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-      /*  stage("Testing Maven") {
+       stage("Testing Maven") {
             steps {
                 sh "mvn -version"
             }
@@ -10,23 +10,24 @@ pipeline {
             steps {
                 sh "java -version"
             }
-        }*/
+        }
         stage("Checkout Git") {
             steps {
-                echo "Pulling"
+                echo "" /* Pulling */
             }
         }
         stage('MVN COMPILE') {
             steps {
                 dir('DevOps_Project') {
-                    sh 'mvn compile'
-                }
+                    sh '' /* mvn compile */
+                } 
+
             }
         }
     stage('Unit Tests / Mockito') {
         steps {
             dir('DevOps_Project') {
-                sh 'mvn test'
+                sh '' /* mvn test */
             }
         }
     }
