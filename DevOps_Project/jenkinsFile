@@ -30,6 +30,14 @@ pipeline {
             }
         }
     }
+    stage('Nexus') {
+            steps {
+                  dir('DevOps_Project') {
+                    sh 'mvn deploy'
+                  }
+                }
+        }
+  
 stage('Test, Jacoco Report & Static Analysis') {
                     steps {
                         dir('DevOps_Project') {
