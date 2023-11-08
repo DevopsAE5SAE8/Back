@@ -1,60 +1,101 @@
-pipeline{
+pipeline {
     agent any
-
-    environment{
-    DOCKERHUB_CREDENTIALS=credentials('7e3ff159-8917-4d14-af8d-0da50f3e9c05')
-    }
-
     stages {
-        stage("Testing Maven"){
+      /*  stage("Testing Maven") {
             steps {
                 sh "mvn -version"
             }
         }
-        stage("Testing JDK"){
+        stage("Testing JDK") {
             steps {
                 sh "java -version"
             }
-        }
-        stage("Chekout Git"){
+        }*/
+        stage("Checkout Git") {
             steps {
                 echo "Pulling"
             }
         }
         stage('MVN COMPILE') {
-            steps{
-                 dir('DevOps_Project') {
-                sh 'mvn compile'
+            steps {
+                dir('DevOps_Project') {
+                    sh 'mvn compile'
+                }
             }
         }
-}
-stage('Unit Tests / Mockito') {
+    stage('Unit Tests / Mockito') {
         steps {
             dir('DevOps_Project') {
                 sh 'mvn test'
             }
         }
     }
+stage('Test, Jacoco Report & Static Analysis') {
+                    steps {
+                        dir('DevOps_Project') {
+                        sh 'mvn test jacoco:report'
+                        junit 'target/surefire-reports/**/*.xml'
+                    }
+}
+        }
+            
 
-stage('Nexus') {
+        stage('MVN SONARQUBE') {
             steps {
-                  dir('DevOps_Project') {
-                    sh 'mvn deploy'
-                  }
-                }
-        }
-  
-
-     stage('MVN SONARQUBE') {
-            steps{
-                 dir('DevOps_Project') {
+                dir('DevOps_Project'){
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ellouminati20'
-            }}
+            }
+}
         }
-    }
-    
 
-post {
+       stage('Deploy') {
+            steps {
+         dir('DevOps_Project') {
+                sh 'mvn deploy -Dmaven.test.skip=true'
+            }
+        }
+        }
+
+         stage('Build Docker Image') {
+                    steps {
+                     dir('DevOps_Project') {
+                        sh 'docker build -t devops_project .'
+                     }
+            }
+        }
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    def dockerUsername = 'abdellazizell'
+                    def dockerPassword = 'Ellouminati20'
+                    sh "docker login -u $dockerUsername -p $dockerPassword"
+                    dir('DevOps_Project') {
+                        sh 'docker tag devops_project abdellazizell/devops_project:latest'
+                        sh 'docker push abdellazizell/devops_project:latest'
+                    }
+                }
+            }
+        }
+/*
+        stage('Docker Compose') {
+                    steps {
+                         dir('DevOps_Project') {
+                        sh 'docker compose up -d'
+                          }
+                    }
+                } */
+
+         stage('PS') {
+                    steps {
+                        dir('DevOps_Project') {
+                            sh 'docker compose ps'
+                        }
+                    }
+                }
+
+        }
+
+   post {
         always {
             script {
                 def scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
@@ -70,4 +111,5 @@ post {
             }
         }
     }
+  
 }
