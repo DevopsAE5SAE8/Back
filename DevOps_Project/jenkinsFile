@@ -13,13 +13,13 @@ pipeline {
         }
         stage("Checkout Git") {
             steps {
-                echo "" /* Pulling */
+                echo "Pulling" 
             }
         }
         stage('MVN COMPILE') {
             steps {
                 dir('DevOps_Project') {
-                    sh '' /* mvn compile */
+                    sh ' mvn compile' 
                 } 
 
             }
