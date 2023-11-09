@@ -15,10 +15,14 @@ services:
       - internal
 
   spring-app:
-    build:
-      context: .
-      dockerfile: ./dockerfile
-    container_name: devops_project
+    container_name: DevOps_Project
+    image: firas97/devops_project
+    restart: on-failure
+    environment:
+      SPRING_APPLICATION_JSON: '{
+      "spring.datasource.url" : "jdbc:mysql://mysql:3306/devops?createDatabaseIfNotExist=true",
+      "spring.datasource.username" : "root"
+      }'
     ports:
       - "8082:8082"
     depends_on:
@@ -31,4 +35,6 @@ volumes:
 
 networks:
  internal :
+
+
 
