@@ -27,14 +27,14 @@ pipeline {
     stage('Unit Tests / Mockito') {
         steps {
             dir('DevOps_Project') {
-                sh '' /* mvn test */
+                sh ' mvn test' 
             }
         }
     }
     stage('Nexus') {
             steps {
                   dir('DevOps_Project') {
-                    sh ''  /* mvn deploy */
+                    sh 'mvn deploy'
                   }
                 }
         }
@@ -42,7 +42,7 @@ pipeline {
     stage('Test, Jacoco Report & Static Analysis') {
                     steps {
                         dir('DevOps_Project') {
-                        sh '' /* mvn test jacoco:report*/
+                        sh 'mvn test jacoco:report'
                         junit 'target/surefire-reports/**/*.xml'
                     }
 }
@@ -52,7 +52,7 @@ pipeline {
         stage('MVN SONARQUBE') {
             steps {
                 dir('DevOps_Project'){
-                sh '' /* mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ellouminati20 */
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ellouminati20' 
             }
 }
         }
@@ -68,7 +68,7 @@ pipeline {
             stage('Docker Image'){
             steps{
                 dir('DevOps_Project') {
-                sh 'docker build -t abdellazizell/elloumidevops:1.0 .'
+                sh 'docker build -t devops_project .'
                 }
             }
         }
@@ -79,8 +79,8 @@ pipeline {
                     def dockerPassword = 'Ellouminati20'
                     sh "docker login -u $dockerUsername -p $dockerPassword"
                     dir('DevOps_Project') {
-                        sh 'docker tag devops_project abdellazizell/elloumidevops:1.0'
-                        sh 'docker push abdellazizell/elloumidevops:1.0'
+                        sh 'docker tag devops_project abdellazizell/devops_project:latest'
+                        sh 'docker push abdellazizell/devops_project:latest'
                     }
                 }
             }
